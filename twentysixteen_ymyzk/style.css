@@ -1,0 +1,73 @@
+/*
+Theme Name: Twenty Sixteen for blog.ymyzk.com
+Theme URI: https://wordpress.org/themes/twentysixteen/
+Author: Yusuke Miyazaki
+Author URI: http://www.ymyzk.com/
+Description: Twenty Sixteen is a modernized take on an ever-popular WordPress layout — the horizontal masthead with an optional right sidebar that works perfectly for blogs and websites. It has custom color options with beautiful default color schemes, a harmonious fluid grid using a mobile-first approach, and impeccable polish in every detail. Twenty Sixteen will make your WordPress look beautiful everywhere.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: black, blue, gray, red, white, yellow, dark, light, one-column, two-columns, right-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+Template: twentysixteen
+Text Domain: twentysixteen_ymyzk
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/* Custom
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+*/
+
+/**
+ * 3.0 - Typography
+ */
+
+body,
+button,
+input,
+select,
+textarea {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+}
+
+code,
+kbd,
+tt,
+var,
+samp,
+pre {
+	font-family: Inconsolata, monospace;
+}
+
+/**
+ * 6.2 - Menus
+ */
+
+.social-navigation a[href*="www.ymyzk.com"]:before {
+	content: "\f475";
+}
+
+/**
+ * 11.1 - Header
+ */
+
+.site-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+}
+
+/**
+ * 11.2 - Posts and pages
+ */
+
+.entry-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+}
+
+/**
+ * 16.0 Custom
+ */
+
+ins.adsbygoogle {
+	background: none
+}
