@@ -1,0 +1,3 @@
+[submodule "twentysixteen_ymyzk/highlight.js"]
+	path = twentysixteen_ymyzk/highlight.js
+	url = https://github.com/isagalaev/highlight.js.git
