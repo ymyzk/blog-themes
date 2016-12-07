@@ -1,6 +1,6 @@
 var $ = jQuery;
 
-$(document).ready(function() {
+window.addEventListener("load", function() {
   // Add a custom language for plain text
   hljs.registerLanguage("custom-plain", function(hljs) {
     return {};
@@ -14,4 +14,4 @@ $(document).ready(function() {
   $('pre:not(:has(>code))').each(function(i, block) {
     hljs.highlightBlock(block);
   });
-});
+}, false);
