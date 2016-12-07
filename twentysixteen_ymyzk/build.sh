@@ -20,6 +20,7 @@ languages=(
   'python'
   'ruby'
   'sql'
+  'vim'
   'xml' # including HTML
   # Others
   'django'
