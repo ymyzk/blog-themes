@@ -1,5 +1,11 @@
 <?php
 
+/* Specify version number */
+function specify_custom_version( $styles ) {
+    $styles->default_version = 20161208;
+}
+add_action( 'wp_default_styles', 'specify_custom_version' );
+
 /* Remove Jetpack Share */
 function jptweak_remove_share() {
     remove_filter( 'the_content', 'sharing_display', 19 );
