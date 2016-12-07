@@ -4,8 +4,9 @@
   "description": "WordPress theme for blog.ymyzk.com",
   "main": "highlight.js",
   "scripts": {
-    "build": "npm run build-css",
+    "build": "npm run build-css && npm run build-highlight",
     "build-css": "postcss -c ./.postcssrc.json",
+    "build-highlight": "./build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yusuke Miyazaki",
