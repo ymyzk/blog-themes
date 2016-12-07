@@ -1,6 +1,6 @@
 var $ = jQuery;
 
-window.addEventListener("load", function() {
+window.addEventListener("DOMContentLoaded", function() {
   // Add a custom language for plain text
   hljs.registerLanguage("custom-plain", function(hljs) {
     return {};
