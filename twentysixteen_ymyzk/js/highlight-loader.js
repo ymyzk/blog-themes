@@ -1,5 +1,3 @@
-var $ = jQuery;
-
 window.addEventListener("DOMContentLoaded", function() {
   // Add a custom language for plain text
   hljs.registerLanguage("custom-plain", function(hljs) {
@@ -13,7 +11,9 @@ window.addEventListener("DOMContentLoaded", function() {
     hljs.highlightBlock(block);
   });
 
-  $('pre:not(:has(>code))').each(function(i, block) {
+  // Old style
+  document.querySelectorAll("pre").forEach(function(block) {
+    if (block.firstChild.nodeName !== "#text") { return; }
     hljs.highlightBlock(block);
   });
 }, false);

@@ -23,5 +23,5 @@ add_action( 'wp_enqueue_scripts', 'append_highlight_js' );
 function append_highlight_js() {
     wp_enqueue_style( 'highlight.js', get_stylesheet_directory_uri() . '/css/monokai.min.css' );
     wp_enqueue_script( 'highlight.js', get_stylesheet_directory_uri() . '/js/highlight.min.js', array(), false, true );
-    wp_enqueue_script( 'highlight-loader.js', get_stylesheet_directory_uri() . '/js/highlight-loader.js', array('jquery', 'highlight.js'), false, true );
+    wp_enqueue_script( 'highlight-loader.js', get_stylesheet_directory_uri() . '/js/highlight-loader.js', array('highlight.js'), false, true );
 }
