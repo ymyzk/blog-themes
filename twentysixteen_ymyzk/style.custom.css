@@ -1,0 +1,55 @@
+/**
+ * 3.0 - Typography
+ */
+
+body,
+button,
+input,
+select,
+textarea {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+code,
+kbd,
+tt,
+var,
+samp,
+pre {
+	font-family: Inconsolata, monospace;
+}
+
+/**
+ * 6.2 - Menus
+ */
+
+.social-navigation a[href*="www.ymyzk.com"]:before {
+	content: "\f475";
+}
+
+/**
+ * 11.1 - Header
+ */
+
+.site-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+/**
+ * 11.2 - Posts and pages
+ */
+
+.entry-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+/**
+ * 16.0 Custom
+ */
+
+ins.adsbygoogle {
+	background: none
+}
