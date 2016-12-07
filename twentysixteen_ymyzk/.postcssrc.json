@@ -1,0 +1,7 @@
+{
+  "use": [
+    "cssnano"
+  ],
+  "input": "style.full.css",
+  "output": "style.css"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "twentysixteen_ymyzk",
+  "version": "1.0.0",
+  "description": "WordPress theme for blog.ymyzk.com",
+  "main": "highlight.js",
+  "scripts": {
+    "build": "npm run build-css",
+    "build-css": "postcss -c ./.postcssrc.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yusuke Miyazaki",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "cssnano": "^3.8.1",
+    "postcss-cli": "^2.6.0"
+  }
+}
