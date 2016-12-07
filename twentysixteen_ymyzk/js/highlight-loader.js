@@ -6,11 +6,13 @@ window.addEventListener("DOMContentLoaded", function() {
     return {};
   });
 
-  $('pre code').each(function(i, block) {
+  // New style
+  document.querySelectorAll("pre code").forEach(function(block) {
     // remove padding of <pre>
-    $(block).parent().css({padding: 0});
+    block.parentNode.style.padding = 0;
     hljs.highlightBlock(block);
   });
+
   $('pre:not(:has(>code))').each(function(i, block) {
     hljs.highlightBlock(block);
   });
