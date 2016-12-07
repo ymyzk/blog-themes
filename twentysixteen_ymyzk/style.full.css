@@ -1,0 +1,70 @@
+/*!
+Theme Name: Twenty Sixteen for blog.ymyzk.com
+Theme URI: https://wordpress.org/themes/twentysixteen/
+Author: Yusuke Miyazaki
+Author URI: http://www.ymyzk.com/
+Version: 1.3
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Template: twentysixteen
+Text Domain: twentysixteen_ymyzk
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+/**
+ * 3.0 - Typography
+ */
+
+body,
+button,
+input,
+select,
+textarea {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+code,
+kbd,
+tt,
+var,
+samp,
+pre {
+	font-family: Inconsolata, monospace;
+}
+
+/**
+ * 6.2 - Menus
+ */
+
+.social-navigation a[href*="www.ymyzk.com"]:before {
+	content: "\f475";
+}
+
+/**
+ * 11.1 - Header
+ */
+
+.site-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+/**
+ * 11.2 - Posts and pages
+ */
+
+.entry-title {
+	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+	font-feature-settings: "pkna";
+}
+
+/**
+ * 16.0 Custom
+ */
+
+ins.adsbygoogle {
+	background: none
+}
