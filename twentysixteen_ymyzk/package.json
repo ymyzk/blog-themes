@@ -13,6 +13,7 @@
   "license": "GPL-2.0",
   "devDependencies": {
     "cssnano": "^3.8.1",
-    "postcss-cli": "^2.6.0"
+    "postcss-cli": "^2.6.0",
+    "postcss-import": "^9.0.0"
   }
 }

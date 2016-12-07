@@ -1,5 +1,6 @@
 {
   "use": [
+    "postcss-import",
     "cssnano"
   ],
   "input": "style.full.css",
