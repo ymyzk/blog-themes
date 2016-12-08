@@ -22,7 +22,7 @@
                           sans-serif;
   --font-family-serif: var(--font-family-japanese);
   --font-family-sans-serif: var(--font-family-japanese);
-  --font-family-monospace: Inconsolata, monospace;
+  --font-family-monospace: Inconsolata, Consolas, "Liberation Mono", Menlo, Monaco, Courier, monospace;
 }
 
 /**
