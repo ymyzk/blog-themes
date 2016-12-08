@@ -1,3 +1,10 @@
+:root {
+  --font-family-serif: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+  --font-family-sans-serif: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
+  --font-family-monospace: Inconsolata, monospace;
+}
+
+
 /**
  * 3.0 - Typography
  */
@@ -7,8 +14,8 @@ button,
 input,
 select,
 textarea {
-	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
-	font-feature-settings: "pkna";
+  font-family: var(--font-family-serif);
+  font-feature-settings: "pkna";
 }
 
 code,
@@ -17,15 +24,115 @@ tt,
 var,
 samp,
 pre {
-	font-family: Inconsolata, monospace;
+  font-family: var(--font-family-monospace);
 }
+
+
+/**
+ * 4.0 - Elements
+ */
+
+/* Placeholder text color -- selectors need to be separate to work. */
+::-webkit-input-placeholder {
+  font-family: var(--font-family-sans-serif);
+}
+
+:-moz-placeholder {
+  font-family: var(--font-family-sans-serif);
+}
+
+::-moz-placeholder {
+  font-family: var(--font-family-sans-serif);
+}
+
+:-ms-input-placeholder {
+  font-family: var(--font-family-sans-serif);
+}
+
+
+/**
+ * 5.0 - Forms
+ */
+
+button,
+button[disabled]:hover,
+button[disabled]:focus,
+input[type="button"],
+input[type="button"][disabled]:hover,
+input[type="button"][disabled]:focus,
+input[type="reset"],
+input[type="reset"][disabled]:hover,
+input[type="reset"][disabled]:focus,
+input[type="submit"],
+input[type="submit"][disabled]:hover,
+input[type="submit"][disabled]:focus {
+  font-family: var(--font-family-sans-serif);
+}
+
+.post-password-form label {
+  font-family: var(--font-family-sans-serif);
+}
+
 
 /**
  * 6.2 - Menus
  */
 
-.social-navigation a[href*="www.ymyzk.com"]:before {
-	content: "\f475";
+.main-navigation {
+  font-family: var(--font-family-sans-serif);
+}
+
+.post-navigation {
+  font-family: var(--font-family-sans-serif);
+}
+
+.post-navigation .post-title {
+  font-family: var(--font-family-sans-serif);
+}
+
+.pagination {
+  font-family: var(--font-family-sans-serif);
+}
+
+.image-navigation,
+.comment-navigation {
+  font-family: var(--font-family-sans-serif);
+}
+
+
+/**
+ * 7.0 - Accessibility
+ */
+
+.site .skip-link {
+  font-family: var(--font-family-sans-serif);
+}
+
+.logged-in .site .skip-link {
+  font-family: "Open Sans", sans-serif;
+}
+
+
+/**
+ * 10.0 - Widgets
+ */
+
+.widget .widget-title {
+  font-family: var(--font-family-sans-serif);
+}
+
+.widget_recent_entries .post-date {
+  font-family: var(--font-family-sans-serif);
+}
+
+.widget_rss .rss-date,
+.widget_rss cite {
+  font-family: var(--font-family-sans-serif);
+}
+
+/* Tag Cloud widget */
+.tagcloud a {
+  font-family: var(--font-family-sans-serif);
 }
 
 /**
@@ -33,8 +140,7 @@ pre {
  */
 
 .site-title {
-	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
-	font-feature-settings: "pkna";
+  font-family: var(--font-family-sans-serif);
 }
 
 /**
@@ -42,14 +148,85 @@ pre {
  */
 
 .entry-title {
-	font-family: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
-	font-feature-settings: "pkna";
+  font-family: var(--font-family-sans-serif);
 }
+
+.entry-footer {
+  font-family: var(--font-family-sans-serif);
+}
+
+.sticky-post {
+  font-family: var(--font-family-sans-serif);
+}
+
+.page-title {
+  font-family: var(--font-family-sans-serif);
+}
+
+.page-links {
+  font-family: var(--font-family-sans-serif);
+}
+
+/**
+ * 11.4 - Comments
+ */
+
+.comments-title,
+.comment-reply-title {
+  font-family: var(--font-family-sans-serif);
+}
+
+.comment-metadata,
+.pingback .edit-link {
+  font-family: var(--font-family-sans-serif);
+}
+
+.comment-reply-link {
+  font-family: var(--font-family-sans-serif);
+}
+
+.comment-form label {
+  font-family: var(--font-family-sans-serif);
+}
+
+.no-comments {
+  font-family: var(--font-family-sans-serif);
+}
+
+.form-allowed-tags code {
+  font-family: var(--font-family-monospace);
+}
+
+.required {
+  font-family: var(--font-family-serif);
+}
+
+/**
+ * 11.6 - Footer
+ */
+
+.site-footer .site-title:after {
+  font-family: var(--font-family-sans-serif);
+}
+
+/**
+ * 13.0 - Multisites
+ */
+
+.widecolumn label,
+.widecolumn .mu_register label {
+  font-family: var(--font-family-sans-serif);
+}
+
 
 /**
  * 16.0 Custom
  */
 
 ins.adsbygoogle {
-	background: none
+  background: none
+}
+
+.social-navigation a[href*="www.ymyzk.com"]:before {
+	content: "\f475";
 }
