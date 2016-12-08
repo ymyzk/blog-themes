@@ -1,9 +1,29 @@
-:root {
-  --font-family-serif: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
-  --font-family-sans-serif: Montserrat, "Yu Gothic", YuGothic, "游ゴシック体", "游ゴシック", "Hiragino Kaku Gothic ProN", Meiryo, "メイリオ", "MS PGothic", sans-serif;
-  --font-family-monospace: Inconsolata, monospace;
+@font-face {
+  font-family: CustomYuGothic;
+  font-weight: normal; /* 400 */
+  src: local("YuGothic-Medium"), /* Postscript */
+       local("Yu Gothic Medium"), /* for Chrome */
+       local("YuGothic-Regular"); /* for Windows 8.1 */
 }
 
+@font-face {
+  font-family: CustomYuGothic;
+  font-weight: bold; /* 700 */
+  src: local("YuGothic-Bold"), /* Postscript */
+       local("Yu Gothic"); /* for Chrome */
+}
+
+:root {
+  --font-family-japanese: -apple-system, /* San Francisco */
+                          BlinkMacSystemFont, /* San Francisco */
+                          "Hiragino Kaku Gothic ProN",
+                          CustomYuGothic, /* Windows */
+                          Meiryo,
+                          sans-serif;
+  --font-family-serif: var(--font-family-japanese);
+  --font-family-sans-serif: var(--font-family-japanese);
+  --font-family-monospace: Inconsolata, monospace;
+}
 
 /**
  * 3.0 - Typography
