@@ -6,6 +6,11 @@ function specify_custom_version( $styles ) {
 }
 add_action( 'wp_default_styles', 'specify_custom_version' );
 
+function dequeue_twentysixteen_fonts() {
+    wp_dequeue_style( 'twentysixteen-fonts' );
+}
+add_action( 'wp_enqueue_scripts', 'dequeue_twentysixteen_fonts', 99 );
+
 /* Remove Jetpack Share */
 function jptweak_remove_share() {
     remove_filter( 'the_content', 'sharing_display', 19 );
