@@ -16,6 +16,7 @@
 :root {
   --font-family-japanese: -apple-system, /* San Francisco */
                           BlinkMacSystemFont, /* San Francisco */
+                          "Hiragino Sans",
                           "Hiragino Kaku Gothic ProN",
                           CustomYuGothic, /* Windows */
                           Meiryo,
@@ -36,6 +37,8 @@ select,
 textarea {
   font-family: var(--font-family-serif);
   font-feature-settings: "pkna";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code,
