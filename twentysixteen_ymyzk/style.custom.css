@@ -280,3 +280,8 @@ ins.adsbygoogle {
 .social-navigation a[href*="www.ymyzk.com"]:before {
 	content: "\f475";
 }
+
+/* Jetpack */
+.sd-social-icon .sd-content ul li[class*=share-].share-custom-hatena a.sd-button {
+  background: #00a4de;
+}
