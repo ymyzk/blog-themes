@@ -11,6 +11,13 @@ function dequeue_twentysixteen_fonts() {
 }
 add_action( 'wp_enqueue_scripts', 'dequeue_twentysixteen_fonts', 99 );
 
+/* Allow users to upload svg image files via media uploader */
+function allow_svg_upload($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'allow_svg_upload' );
+
 /* Remove Jetpack Share */
 function jptweak_remove_share() {
     remove_filter( 'the_content', 'sharing_display', 19 );
