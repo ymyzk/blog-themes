@@ -282,6 +282,16 @@ ins.adsbygoogle {
 }
 
 /* Jetpack */
+
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button.share-custom.share-custom-hatena,
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button.share-custom.share-custom-pv {
+  padding-top: 9px;
+}
+
 .sd-social-icon .sd-content ul li[class*=share-].share-custom-hatena a.sd-button {
   background: #00a4de;
+}
+
+.sd-social-icon .sd-content ul li[class*=share-] a.sd-button.share-custom-pv {
+  pointer-events: none;
 }
