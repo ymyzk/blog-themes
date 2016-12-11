@@ -6,6 +6,7 @@ function specify_custom_version( $styles ) {
 }
 add_action( 'wp_default_styles', 'specify_custom_version' );
 
+/* Disable Web Fonts in twentysixteen theme */
 function dequeue_twentysixteen_fonts() {
     wp_dequeue_style( 'twentysixteen-fonts' );
 }
@@ -19,6 +20,7 @@ function allow_svg_upload($mimes) {
 add_filter( 'upload_mimes', 'allow_svg_upload' );
 
 /* Remove Jetpack Share */
+/* https://jetpack.com/2013/06/10/moving-sharing-icons/ */
 function jptweak_remove_share() {
     remove_filter( 'the_content', 'sharing_display', 19 );
     remove_filter( 'the_excerpt', 'sharing_display', 19 );
