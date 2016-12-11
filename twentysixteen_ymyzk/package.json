@@ -4,8 +4,9 @@
   "description": "WordPress theme for blog.ymyzk.com",
   "main": "highlight.js",
   "scripts": {
-    "build": "npm run build-css && npm run build-highlight",
+    "build": "npm run build-css && npm run build-js && npm run build-highlight",
     "build-css": "postcss -c ./.postcssrc.json",
+    "build-js": "cat js/highlight.min.js js/highlight-loader.js js/sharing.js > js/main.js",
     "build-highlight": "./build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
