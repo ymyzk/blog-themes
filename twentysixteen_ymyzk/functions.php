@@ -2,7 +2,7 @@
 
 /* Specify version number */
 function specify_custom_version( $styles ) {
-    $styles->default_version = 20161211;
+    $styles->default_version = 20161212;
 }
 add_action( 'wp_default_styles', 'specify_custom_version' );
 
