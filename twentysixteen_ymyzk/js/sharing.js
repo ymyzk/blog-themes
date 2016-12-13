@@ -15,6 +15,18 @@ if (typeof WPCOM_sharing_counts !== "undefined") {
     var $shareTwitter = jQuery('a[data-shared=sharing-twitter-' + postId + ']');
 
     jQuery.ajax({
+      url     : "https://jsoon.digitiminimi.com/twitter/count.json",
+      data    : {url: encodeURI(url)},
+      dataType: "jsonp",
+      success : function(data) {
+        if (typeof data === "undefined") return;
+        var count = data.count;
+        if (typeof count === "undefined" || count <= 0) return;
+        WPCOMSharing.inject_share_count('sharing-twitter-' + postId, count);
+      }
+    });
+
+    jQuery.ajax({
       url     : "https://b.hatena.ne.jp/entry.count",
       data    : {url: encodeURI(url)},
       dataType: "jsonp",
