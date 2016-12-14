@@ -1,4 +1,4 @@
-/*! highlight.js v9.8.0 | BSD3 License | git.io/hljslicense */
+/*! highlight.js v9.9.0 | BSD3 License | git.io/hljslicense */
 (function(factory) {
 
   // Find the global object for export to both the browser and web workers.
@@ -188,7 +188,7 @@
 
     while (original.length || highlighted.length) {
       var stream = selectStream();
-      result += escape(value.substr(processed, stream[0].offset - processed));
+      result += escape(value.substring(processed, stream[0].offset));
       processed = stream[0].offset;
       if (stream === original) {
         /*
@@ -374,7 +374,7 @@
       match = top.lexemesRe.exec(mode_buffer);
 
       while (match) {
-        result += escape(mode_buffer.substr(last_index, match.index - last_index));
+        result += escape(mode_buffer.substring(last_index, match.index));
         keyword_match = keywordMatch(top, match);
         if (keyword_match) {
           relevance += keyword_match[1];
@@ -511,7 +511,7 @@
         match = top.terminators.exec(value);
         if (!match)
           break;
-        count = processLexeme(value.substr(index, match.index - index), match[0]);
+        count = processLexeme(value.substring(index, match.index), match[0]);
         index = match.index + count;
       }
       processLexeme(value.substr(index));
@@ -2627,7 +2627,7 @@ hljs.registerLanguage('ruby', function(hljs) {
       keywords: RUBY_KEYWORDS
     },
     { // regexp container
-      begin: '(' + hljs.RE_STARTERS_RE + ')\\s*',
+      begin: '(' + hljs.RE_STARTERS_RE + '|unless)\\s*',
       contains: [
         IRB_OBJECT,
         {
