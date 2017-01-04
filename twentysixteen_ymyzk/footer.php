@@ -49,7 +49,7 @@
 				?>
 				<span class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span>
 				<!-- Custom -->
-				Copyright &copy; 2013-2016 Yusuke Miyazaki.
+				Copyright &copy; 2013-<?php echo date('Y'); ?> Yusuke Miyazaki.
 				<!-- Custom -->
 			</div><!-- .site-info -->
 		</footer><!-- .site-footer -->
