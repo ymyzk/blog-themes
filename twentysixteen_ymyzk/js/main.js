@@ -24,9 +24,9 @@ if (typeof WPCOM_sharing_counts !== "undefined") {
     if (count < 1000) {
       return count;
     } else if (count >= 1000 && count < 10000) {
-      return String(count).substring(0, 1) + 'K+';
+      return String(count).substring(0, 1) + '.' + String(count).substring(1, 2) + 'K';
     } else if (count >= 10000 && count < 100000) {
-      return String(count).substring(0, 2) + 'K+';
+      return String(count).substring(0, 2) + 'K';
     }
     return '100K+';
   };
