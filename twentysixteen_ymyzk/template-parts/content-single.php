@@ -33,20 +33,23 @@
 
 		// Custom start
                 ?>
-                        <style>
-                        .blog-single-footer { width: 250px; height: 250px; }
-                        @media(min-width: 320px) { .blog-single-footer { width: 300px; height: 250px; } }
-                        @media(min-width: 356px) { .blog-single-footer { width: 336px; height: 280px; } }
-                        </style>
-                        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                        <!-- Blog Single footer -->
-                        <ins class="adsbygoogle blog-single-footer"
-                        style="display:inline-block"
-                        data-ad-client="ca-pub-7757732440953348"
-                        data-ad-slot="4830889717"></ins>
-                        <script>
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
+                        <aside>
+                          <div style="font-size: 12px;">広告</div>
+                          <style>
+                          .blog-single-footer { padding: 0; width: 250px; height: 250px; }
+                          @media(min-width: 320px) { .blog-single-footer { width: 300px; height: 250px; } }
+                          @media(min-width: 356px) { .blog-single-footer { width: 336px; height: 280px; } }
+                          </style>
+                          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                          <!-- Blog Single footer -->
+                          <ins class="adsbygoogle blog-single-footer"
+                          style="display:inline-block"
+                          data-ad-client="ca-pub-7757732440953348"
+                          data-ad-slot="4830889717"></ins>
+                          <script>
+                          (adsbygoogle = window.adsbygoogle || []).push({});
+                          </script>
+                        </aside>
                 <?php
                         // Related posts
                         echo do_shortcode( '[jetpack-related-posts]' );
