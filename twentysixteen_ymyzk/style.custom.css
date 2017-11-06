@@ -36,7 +36,7 @@ input,
 select,
 textarea {
   font-family: var(--font-family-serif);
-  font-feature-settings: "pkna";
+  font-feature-settings: "palt";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
