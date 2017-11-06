@@ -34,7 +34,7 @@ languages=(
 cd $(dirname $0)
 
 cd highlight.js/
-npm install
+yarn
 
 node ./tools/build.js -n ${languages[*]}
 cp ./build/highlight.pack.js ../js/highlight.js
