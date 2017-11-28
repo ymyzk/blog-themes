@@ -302,5 +302,5 @@ body .sd-social-icon-text .sd-content li.share-custom a span,
 body .sd-social-text .sd-content li.share-custom a span,
 body .sd-social-official .sd-content li.share-custom a span,
 body .sd-content ul li.share-custom a.share-icon span {
-  height: 16px;
+  height: 16px !important;
 }
