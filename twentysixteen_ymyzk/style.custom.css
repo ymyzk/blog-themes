@@ -297,10 +297,10 @@ ins.adsbygoogle {
 }
 
 /* Revert https://github.com/Automattic/jetpack/pull/8060 */
-body .sd-social-icon .sd-content li.share-custom a span,
-body .sd-social-icon-text .sd-content li.share-custom a span,
-body .sd-social-text .sd-content li.share-custom a span,
-body .sd-social-official .sd-content li.share-custom a span,
-body .sd-content ul li.share-custom a.share-icon span {
+body .sd-social-icon .sd-content li.share-custom a > span,
+body .sd-social-icon-text .sd-content li.share-custom a > span,
+body .sd-social-text .sd-content li.share-custom a > span,
+body .sd-social-official .sd-content li.share-custom a > span,
+body .sd-content ul li.share-custom a.share-icon > span {
   height: 16px !important;
 }
