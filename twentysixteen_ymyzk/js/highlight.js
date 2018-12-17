@@ -1,4 +1,4 @@
-/*! highlight.js v9.12.0 | BSD3 License | git.io/hljslicense */
+/*! highlight.js v9.13.1 | BSD3 License | git.io/hljslicense */
 (function(factory) {
 
   // Find the global object for export to both the browser and web workers.
@@ -270,6 +270,8 @@
         if (!mode.begin)
           mode.begin = /\B|\b/;
         mode.beginRe = langRe(mode.begin);
+        if (mode.endSameAsBegin)
+          mode.end = mode.begin;
         if (!mode.end && !mode.endsWithParent)
           mode.end = /\B|\b/;
         if (mode.end)
@@ -318,11 +320,18 @@
   */
   function highlight(name, value, ignore_illegals, continuation) {
 
+    function escapeRe(value) {
+      return new RegExp(value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'm');
+    }
+
     function subMode(lexeme, mode) {
       var i, length;
 
       for (i = 0, length = mode.contains.length; i < length; i++) {
         if (testRe(mode.contains[i].beginRe, lexeme)) {
+          if (mode.contains[i].endSameAsBegin) {
+            mode.contains[i].endRe = escapeRe( mode.contains[i].beginRe.exec(lexeme)[0] );
+          }
           return mode.contains[i];
         }
       }
@@ -462,12 +471,15 @@
           if (top.className) {
             result += spanEndTag;
           }
-          if (!top.skip) {
+          if (!top.skip && !top.subLanguage) {
             relevance += top.relevance;
           }
           top = top.parent;
         } while (top !== end_mode.parent);
         if (end_mode.starts) {
+          if (end_mode.endSameAsBegin) {
+            end_mode.starts.endRe = end_mode.endRe;
+          }
           startNewMode(end_mode.starts, '');
         }
         return origin.returnEnd ? 0 : lexeme.length;
@@ -553,7 +565,7 @@
       value: escape(text)
     };
     var second_best = result;
-    languageSubset.filter(getLanguage).forEach(function(name) {
+    languageSubset.filter(getLanguage).filter(autoDetection).forEach(function(name) {
       var current = highlight(name, text, false);
       current.language = name;
       if (current.relevance > second_best.relevance) {
@@ -690,6 +702,11 @@
     return languages[name] || languages[aliases[name]];
   }
 
+  function autoDetection(name) {
+    var lang = getLanguage(name);
+    return lang && !lang.disableAutodetect;
+  }
+
   /* Interface definition */
 
   hljs.highlight = highlight;
@@ -702,6 +719,7 @@
   hljs.registerLanguage = registerLanguage;
   hljs.listLanguages = listLanguages;
   hljs.getLanguage = getLanguage;
+  hljs.autoDetection = autoDetection;
   hljs.inherit = inherit;
 
   // Common regexps
@@ -899,7 +917,15 @@ hljs.registerLanguage('cs', function(hljs) {
     literal:
       'null false true'
   };
-
+  var NUMBERS = {
+    className: 'number',
+    variants: [
+      { begin: '\\b(0b[01\']+)' },
+      { begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)(u|U|l|L|ul|UL|f|F|b|B)' },
+      { begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)' }
+    ],
+    relevance: 0
+  };
   var VERBATIM_STRING = {
     className: 'string',
     begin: '@"', end: '"',
@@ -933,7 +959,7 @@ hljs.registerLanguage('cs', function(hljs) {
     VERBATIM_STRING,
     hljs.APOS_STRING_MODE,
     hljs.QUOTE_STRING_MODE,
-    hljs.C_NUMBER_MODE,
+    NUMBERS,
     hljs.C_BLOCK_COMMENT_MODE
   ];
   SUBST_NO_LF.contains = [
@@ -942,7 +968,7 @@ hljs.registerLanguage('cs', function(hljs) {
     VERBATIM_STRING_NO_LF,
     hljs.APOS_STRING_MODE,
     hljs.QUOTE_STRING_MODE,
-    hljs.C_NUMBER_MODE,
+    NUMBERS,
     hljs.inherit(hljs.C_BLOCK_COMMENT_MODE, {illegal: /\n/})
   ];
   var STRING = {
@@ -995,10 +1021,10 @@ hljs.registerLanguage('cs', function(hljs) {
         }
       },
       STRING,
-      hljs.C_NUMBER_MODE,
+      NUMBERS,
       {
         beginKeywords: 'class interface', end: /[{;=]/,
-        illegal: /[^\s:]/,
+        illegal: /[^\s:,]/,
         contains: [
           hljs.TITLE_MODE,
           hljs.C_LINE_COMMENT_MODE,
@@ -1031,7 +1057,7 @@ hljs.registerLanguage('cs', function(hljs) {
       {
         className: 'function',
         begin: '(' + TYPE_IDENT_RE + '\\s+)+' + hljs.IDENT_RE + '\\s*\\(', returnBegin: true,
-        end: /[{;=]/, excludeEnd: true,
+        end: /\s*[{;=]/, excludeEnd: true,
         keywords: KEYWORDS,
         contains: [
           {
@@ -1048,7 +1074,7 @@ hljs.registerLanguage('cs', function(hljs) {
             relevance: 0,
             contains: [
               STRING,
-              hljs.C_NUMBER_MODE,
+              NUMBERS,
               hljs.C_BLOCK_COMMENT_MODE
             ]
           },
@@ -1256,9 +1282,21 @@ hljs.registerLanguage('xml', function(hljs) {
         relevance: 10
       },
       {
+        className: 'meta',
+        begin: /<\?xml/, end: /\?>/, relevance: 10
+      },
+      {
         begin: /<\?(php)?/, end: /\?>/,
         subLanguage: 'php',
-        contains: [{begin: '/\\*', end: '\\*/', skip: true}]
+        contains: [
+          // We don't want the php closing tag ?> to close the PHP block when
+          // inside any of the following blocks:
+          {begin: '/\\*', end: '\\*/', skip: true},
+          {begin: 'b"', end: '"', skip: true},
+          {begin: 'b\'', end: '\'', skip: true},
+          hljs.inherit(hljs.APOS_STRING_MODE, {illegal: null, className: null, contains: null, skip: true}),
+          hljs.inherit(hljs.QUOTE_STRING_MODE, {illegal: null, className: null, contains: null, skip: true})
+        ]
       },
       {
         className: 'tag',
@@ -1286,13 +1324,6 @@ hljs.registerLanguage('xml', function(hljs) {
           end: '\<\/script\>', returnEnd: true,
           subLanguage: ['actionscript', 'javascript', 'handlebars', 'xml']
         }
-      },
-      {
-        className: 'meta',
-        variants: [
-          {begin: /<\?xml/, end: /\?>/, relevance: 10},
-          {begin: /<\?\w+/, end: /\?>/}
-        ]
       },
       {
         className: 'tag',
@@ -1505,7 +1536,7 @@ hljs.registerLanguage('java', function(hljs) {
   var JAVA_IDENT_RE = '[\u00C0-\u02B8a-zA-Z_$][\u00C0-\u02B8a-zA-Z_$0-9]*';
   var GENERIC_IDENT_RE = JAVA_IDENT_RE + '(<' + JAVA_IDENT_RE + '(\\s*,\\s*' + JAVA_IDENT_RE + ')*>)?';
   var KEYWORDS =
-    'false synchronized int abstract float private char boolean static null if const ' +
+    'false synchronized int abstract float private char boolean var static null if const ' +
     'for true while long strictfp finally protected import native final void ' +
     'enum else break transient catch instanceof byte super volatile case assert short ' +
     'package default double public try this switch continue throws protected public private ' +
@@ -2350,7 +2381,7 @@ hljs.registerLanguage('php', function(hljs) {
   };
   var NUMBER = {variants: [hljs.BINARY_NUMBER_MODE, hljs.C_NUMBER_MODE]};
   return {
-    aliases: ['php3', 'php4', 'php5', 'php6'],
+    aliases: ['php', 'php3', 'php4', 'php5', 'php6', 'php7'],
     case_insensitive: true,
     keywords:
       'and include_once list abstract global private echo interface as static endswitch ' +
@@ -2478,21 +2509,21 @@ hljs.registerLanguage('python', function(hljs) {
     variants: [
       {
         begin: /(u|b)?r?'''/, end: /'''/,
-        contains: [PROMPT],
+        contains: [hljs.BACKSLASH_ESCAPE, PROMPT],
         relevance: 10
       },
       {
         begin: /(u|b)?r?"""/, end: /"""/,
-        contains: [PROMPT],
+        contains: [hljs.BACKSLASH_ESCAPE, PROMPT],
         relevance: 10
       },
       {
         begin: /(fr|rf|f)'''/, end: /'''/,
-        contains: [PROMPT, SUBST]
+        contains: [hljs.BACKSLASH_ESCAPE, PROMPT, SUBST]
       },
       {
         begin: /(fr|rf|f)"""/, end: /"""/,
-        contains: [PROMPT, SUBST]
+        contains: [hljs.BACKSLASH_ESCAPE, PROMPT, SUBST]
       },
       {
         begin: /(u|r|ur)'/, end: /'/,
@@ -2510,11 +2541,11 @@ hljs.registerLanguage('python', function(hljs) {
       },
       {
         begin: /(fr|rf|f)'/, end: /'/,
-        contains: [SUBST]
+        contains: [hljs.BACKSLASH_ESCAPE, SUBST]
       },
       {
         begin: /(fr|rf|f)"/, end: /"/,
-        contains: [SUBST]
+        contains: [hljs.BACKSLASH_ESCAPE, SUBST]
       },
       hljs.APOS_STRING_MODE,
       hljs.QUOTE_STRING_MODE
@@ -2751,7 +2782,7 @@ hljs.registerLanguage('sql', function(hljs) {
   var COMMENT_MODE = hljs.COMMENT('--', '$');
   return {
     case_insensitive: true,
-    illegal: /[<>{}*#]/,
+    illegal: /[<>{}*]/,
     contains: [
       {
         beginKeywords:
@@ -2759,12 +2790,12 @@ hljs.registerLanguage('sql', function(hljs) {
           'delete do handler insert load replace select truncate update set show pragma grant ' +
           'merge describe use explain help declare prepare execute deallocate release ' +
           'unlock purge reset change stop analyze cache flush optimize repair kill ' +
-          'install uninstall checksum restore check backup revoke comment',
+          'install uninstall checksum restore check backup revoke comment with',
         end: /;/, endsWithParent: true,
         lexemes: /[\w\.]+/,
         keywords: {
           keyword:
-            'abort abs absolute acc acce accep accept access accessed accessible account acos action activate add ' +
+            'as abort abs absolute acc acce accep accept access accessed accessible account acos action activate add ' +
             'addtime admin administer advanced advise aes_decrypt aes_encrypt after agent aggregate ali alia alias ' +
             'allocate allow alter always analyze ancillary and any anydata anydataset anyschema anytype apply ' +
             'archive archived archivelog are as asc ascii asin assembly assertion associate asynchronous at atan ' +
@@ -2799,7 +2830,7 @@ hljs.registerLanguage('sql', function(hljs) {
             'execu execut execute exempt exists exit exp expire explain export export_set extended extent external ' +
             'external_1 external_2 externally extract failed failed_login_attempts failover failure far fast ' +
             'feature_set feature_value fetch field fields file file_name_convert filesystem_like_logging final ' +
-            'finish first first_value fixed flash_cache flashback floor flush following follows for forall force ' +
+            'finish first first_value fixed flash_cache flashback floor flush following follows for forall force foreign ' +
             'form forma format found found_rows freelist freelists freepools fresh from from_base64 from_days ' +
             'ftp full function general generated get get_format get_lock getdate getutcdate global global_name ' +
             'globally go goto grant grants greatest group group_concat group_id grouping grouping_id groups ' +
@@ -2824,7 +2855,7 @@ hljs.registerLanguage('sql', function(hljs) {
             'nocheck nocompress nocopy nocycle nodelay nodiscardfile noentityescaping noguarantee nokeep nologfile ' +
             'nomapping nomaxvalue nominimize nominvalue nomonitoring none noneditionable nonschema noorder ' +
             'nopr nopro noprom nopromp noprompt norely noresetlogs noreverse normal norowdependencies noschemacheck ' +
-            'noswitch not nothing notice notrim novalidate now nowait nth_value nullif nulls num numb numbe ' +
+            'noswitch not nothing notice notnull notrim novalidate now nowait nth_value nullif nulls num numb numbe ' +
             'nvarchar nvarchar2 object ocicoll ocidate ocidatetime ociduration ociinterval ociloblocator ocinumber ' +
             'ociref ocirefcursor ocirowid ocistring ocitype oct octet_length of off offline offset oid oidindex old ' +
             'on online only opaque open operations operator optimal optimize option optionally or oracle oracle_date ' +
@@ -2865,7 +2896,7 @@ hljs.registerLanguage('sql', function(hljs) {
             'timezone_minute timezone_region to to_base64 to_date to_days to_seconds todatetimeoffset trace tracking ' +
             'transaction transactional translate translation treat trigger trigger_nestlevel triggers trim truncate ' +
             'try_cast try_convert try_parse type ub1 ub2 ub4 ucase unarchived unbounded uncompress ' +
-            'under undo unhex unicode uniform uninstall union unique unix_timestamp unknown unlimited unlock unpivot ' +
+            'under undo unhex unicode uniform uninstall union unique unix_timestamp unknown unlimited unlock unnest unpivot ' +
             'unrecoverable unsafe unsigned until untrusted unusable unused update updated upgrade upped upper upsert ' +
             'url urowid usable usage use use_stored_outlines user user_data user_resources users using utc_date ' +
             'utc_timestamp uuid uuid_short validate validate_password_strength validation valist value values var ' +
@@ -2875,10 +2906,10 @@ hljs.registerLanguage('sql', function(hljs) {
             'xdb xml xmlagg xmlattributes xmlcast xmlcolattval xmlelement xmlexists xmlforest xmlindex xmlnamespaces ' +
             'xmlpi xmlquery xmlroot xmlschema xmlserialize xmltable xmltype xor year year_to_month years yearweek',
           literal:
-            'true false null',
+            'true false null unknown',
           built_in:
-            'array bigint binary bit blob boolean char character date dec decimal float int int8 integer interval number ' +
-            'numeric real record serial serial8 smallint text varchar varying void'
+            'array bigint binary bit blob bool boolean char character date dec decimal float int int8 integer interval number ' +
+            'numeric real record serial serial8 smallint text time timestamp varchar varying void'
         },
         contains: [
           {
@@ -2898,19 +2929,23 @@ hljs.registerLanguage('sql', function(hljs) {
           },
           hljs.C_NUMBER_MODE,
           hljs.C_BLOCK_COMMENT_MODE,
-          COMMENT_MODE
+          COMMENT_MODE,
+          hljs.HASH_COMMENT_MODE
         ]
       },
       hljs.C_BLOCK_COMMENT_MODE,
-      COMMENT_MODE
+      COMMENT_MODE,
+      hljs.HASH_COMMENT_MODE
     ]
   };
 });
 
 hljs.registerLanguage('swift', function(hljs) {
   var SWIFT_KEYWORDS = {
-      keyword: '__COLUMN__ __FILE__ __FUNCTION__ __LINE__ as as! as? associativity ' +
-        'break case catch class continue convenience default defer deinit didSet do ' +
+      keyword: '#available #colorLiteral #column #else #elseif #endif #file ' +
+        '#fileLiteral #function #if #imageLiteral #line #selector #sourceLocation ' +
+        '_ __COLUMN__ __FILE__ __FUNCTION__ __LINE__ Any as as! as? associatedtype ' +
+        'associativity break case catch class continue convenience default defer deinit didSet do ' +
         'dynamic dynamicType else enum extension fallthrough false fileprivate final for func ' +
         'get guard if import in indirect infix init inout internal is lazy left let ' +
         'mutating nil none nonmutating open operator optional override postfix precedence ' +
@@ -2953,20 +2988,25 @@ hljs.registerLanguage('swift', function(hljs) {
     keywords: SWIFT_KEYWORDS,
     contains: [] // assigned later
   };
+  var STRING = {
+    className: 'string',
+    contains: [hljs.BACKSLASH_ESCAPE, SUBST],
+    variants: [
+      {begin: /"""/, end: /"""/},
+      {begin: /"/, end: /"/},
+    ]
+  };
   var NUMBERS = {
       className: 'number',
       begin: '\\b([\\d_]+(\\.[\\deE_]+)?|0x[a-fA-F0-9_]+(\\.[a-fA-F0-9p_]+)?|0b[01_]+|0o[0-7_]+)\\b',
       relevance: 0
   };
-  var QUOTE_STRING_MODE = hljs.inherit(hljs.QUOTE_STRING_MODE, {
-    contains: [SUBST, hljs.BACKSLASH_ESCAPE]
-  });
   SUBST.contains = [NUMBERS];
 
   return {
     keywords: SWIFT_KEYWORDS,
     contains: [
-      QUOTE_STRING_MODE,
+      STRING,
       hljs.C_LINE_COMMENT_MODE,
       BLOCK_COMMENT,
       TYPE,
@@ -2988,7 +3028,7 @@ hljs.registerLanguage('swift', function(hljs) {
             contains: [
               'self',
               NUMBERS,
-              QUOTE_STRING_MODE,
+              STRING,
               hljs.C_BLOCK_COMMENT_MODE,
               {begin: ':'} // relevance booster
             ],
@@ -3009,8 +3049,8 @@ hljs.registerLanguage('swift', function(hljs) {
       },
       {
         className: 'meta', // @attributes
-        begin: '(@warn_unused_result|@exported|@lazy|@noescape|' +
-                  '@NSCopying|@NSManaged|@objc|@convention|@required|' +
+        begin: '(@discardableResult|@warn_unused_result|@exported|@lazy|@noescape|' +
+                  '@NSCopying|@NSManaged|@objc|@objcMembers|@convention|@required|' +
                   '@noreturn|@IBAction|@IBDesignable|@IBInspectable|@IBOutlet|' +
                   '@infix|@prefix|@postfix|@autoclosure|@testable|@available|' +
                   '@nonobjc|@NSApplicationMain|@UIApplicationMain)'
@@ -3150,7 +3190,11 @@ hljs.registerLanguage('vim', function(hljs) {
     illegal: /;/,
     contains: [
       hljs.NUMBER_MODE,
-      hljs.APOS_STRING_MODE,
+      {
+        className: 'string',
+        begin: '\'', end: '\'',
+        illegal: '\\n'
+      },
 
       /*
       A double quote can start either a string or a line comment. Strings are
@@ -3251,6 +3295,10 @@ hljs.registerLanguage('yaml', function(hljs) {
         excludeBegin: true,
         excludeEnd: true,
         relevance: 0
+      },
+      { // local tags
+        className: 'type',
+        begin: '!' + hljs.UNDERSCORE_IDENT_RE,
       },
       { // data type
         className: 'type',
