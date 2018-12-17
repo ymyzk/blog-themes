@@ -19,6 +19,7 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
+  <!-- Custom -->
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <script>
        (adsbygoogle = window.adsbygoogle || []).push({
@@ -26,6 +27,7 @@
             enable_page_level_ads: true
        });
   </script>
+  <!-- /Custom -->
 </head>
 
 <body <?php body_class(); ?>>
@@ -42,12 +44,10 @@
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 					<?php else : ?>
 						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-					<?php
-					endif;
+					<?php endif;
 
 					$description = get_bloginfo( 'description', 'display' );
-if ( $description || is_customize_preview() ) :
-					?>
+					if ( $description || is_customize_preview() ) : ?>
 						<p class="site-description"><?php echo $description; ?></p>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
@@ -59,12 +59,10 @@ if ( $description || is_customize_preview() ) :
 						<?php if ( has_nav_menu( 'primary' ) ) : ?>
 							<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
 								<?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'primary',
-											'menu_class' => 'primary-menu',
-										)
-									);
+									wp_nav_menu( array(
+										'theme_location' => 'primary',
+										'menu_class'     => 'primary-menu',
+									 ) );
 								?>
 							</nav><!-- .main-navigation -->
 						<?php endif; ?>
@@ -72,15 +70,13 @@ if ( $description || is_customize_preview() ) :
 						<?php if ( has_nav_menu( 'social' ) ) : ?>
 							<nav id="social-navigation" class="social-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
 								<?php
-									wp_nav_menu(
-										array(
-											'theme_location' => 'social',
-											'menu_class'  => 'social-links-menu',
-											'depth'       => 1,
-											'link_before' => '<span class="screen-reader-text">',
-											'link_after'  => '</span>',
-										)
-									);
+									wp_nav_menu( array(
+										'theme_location' => 'social',
+										'menu_class'     => 'social-links-menu',
+										'depth'          => 1,
+										'link_before'    => '<span class="screen-reader-text">',
+										'link_after'     => '</span>',
+									) );
 								?>
 							</nav><!-- .social-navigation -->
 						<?php endif; ?>
