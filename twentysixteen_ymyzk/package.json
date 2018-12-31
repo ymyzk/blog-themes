@@ -13,9 +13,9 @@
   "author": "Yusuke Miyazaki",
   "license": "GPL-2.0",
   "devDependencies": {
-    "cssnano": "^4.0.0-rc.2",
-    "postcss-cli": "^4.1.1",
-    "postcss-custom-properties": "^6.2.0",
-    "postcss-import": "^11.0.0"
+    "cssnano": "^4.1.7",
+    "postcss-cli": "^6.0.1",
+    "postcss-custom-properties": "^8.0.9",
+    "postcss-import": "^12.0.1"
   }
 }
