@@ -19,15 +19,10 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
-  <!-- Custom -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-7757732440953348",
-            enable_page_level_ads: true
-       });
-  </script>
-  <!-- /Custom -->
+	<!-- Custom -->
+	<!-- Auto ads -->
+	<script data-ad-client="ca-pub-7757732440953348" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- /Custom -->
 </head>
 
 <body <?php body_class(); ?>>
