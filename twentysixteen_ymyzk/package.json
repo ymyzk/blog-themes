@@ -4,7 +4,7 @@
   "description": "WordPress theme for blog.ymyzk.com",
   "main": "highlight.js",
   "scripts": {
-    "build": "yarn build-css && yarn build-js && yarn build-highlight",
+    "build": "npm run build-css && npm run build-js && npm run build-highlight",
     "build-css": "postcss style.full.css -o style.css",
     "build-js": "cat js/highlight.min.js js/highlight-loader.js js/sharing.js > js/main.js",
     "build-highlight": "./build.sh",
